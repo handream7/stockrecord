@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>코인 수익률 기록일지</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <h1>나만의 코인 수익률 기록일지</h1>
+    <button id="record-button">기록하기</button>
+
+    <hr>
+
+    <h2>요일별 누적자산 그래프</h2>
+    <div class="chart-container">
+        <canvas id="asset-chart"></canvas>
+    </div>
+
+    <hr>
+
+    <h2>수익 기록표</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>날짜</th>
+                <th>수익 (원)</th>
+                <th>레버리지 (배)</th>
+                <th>매입수수료 (원)</th>
+                <th>매도수수료 (원)</th>
+                <th>누적자산 (원)</th>
+                <th>비고</th>
+            </tr>
+        </thead>
+        <tbody id="data-table-body">
+            </tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+</html>
