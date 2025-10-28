@@ -2,20 +2,40 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
         Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    margin: 20px;
+    margin: 0;
     background-color: #f4f7f6;
     color: #333;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 전체 내용을 감싸는 컨테이너 */
+.container {
+    width: 100%;
+    max-width: 1000px;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h1, h2 {
     color: #2c3e50;
     border-bottom: 2px solid #bdc3c7;
     padding-bottom: 5px;
+    text-align: center;
+    margin: 1em 0;
 }
 
-/* 기록하기 버튼 */
-#record-button {
-    background-color: #3498db;
+/* 버튼 오른쪽 정렬 */
+.button-container {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+#record-button, #modify-button {
     color: white;
     border: none;
     padding: 10px 15px;
@@ -24,25 +44,59 @@ h1, h2 {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    white-space: nowrap;
 }
 
+#record-button {
+    background-color: #3498db;
+}
 #record-button:hover {
     background-color: #2980b9;
 }
 
+#modify-button {
+    background-color: #f39c12;
+    margin-left: 10px;
+}
+#modify-button:hover {
+    background-color: #e67e22;
+}
+
+/* 외부 저장 버튼 스타일 (공용) */
+.save-btn-external {
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+    display: none;
+    margin-left: 10px;
+}
+
+#save-new-button, #save-modify-button {
+    background-color: #e74c3c;
+}
+#save-new-button:hover, #save-modify-button:hover {
+    background-color: #c0392b;
+}
+
+
 /* 테이블 스타일 */
 table {
     width: 100%;
-    border-collapse: collapse; /* 테두리 한 줄로 합치기 */
-    margin-top: 15px;
+    border-collapse: collapse;
+    margin-top: 0; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    table-layout: fixed;
 }
 
-/* 테이블 헤더(thead) 및 셀(th, td) 스타일 */
 th, td {
     border: 1px solid #ddd;
     padding: 10px;
-    text-align: left;
 }
 
 /* 테이블 헤더 */
@@ -52,26 +106,172 @@ thead {
     font-weight: bold;
 }
 
-/* 테이블 바디(tbody)의 짝수 번째 줄 배경색 */
+thead th {
+    text-align: center;
+}
+
+/* 테이블 컬럼 너비 조절 */
+thead th:nth-child(1) { width: 18%; } /* 날짜 */
+thead th:nth-child(2) { width: 15%; } /* 손익 */
+thead th:nth-child(3) { width: 12%; } /* 레버리지 */
+thead th:nth-child(4) { width: 15%; } /* 누적자산 */
+thead th:nth-child(5) { width: 40%; } /* 비고 */
+
+
+tbody td {
+    text-align: right;
+    word-break: break-word;
+}
+
+/* === (수정) 1번째 열 (날짜) 가운데 정렬 === */
+tbody td:nth-child(1) {
+    text-align: center;
+}
+/* === 수정 끝 === */
+
+
+/* 5번째 열 (비고)만 왼쪽 정렬 */
+tbody td:nth-child(5) {
+    text-align: left;
+}
+
 tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-/* 그래프 컨테이너 (크기 조절) */
+/* 손익(P/L) 색상 스타일 */
+.pl-positive {
+    color: #2ecc71;
+    font-weight: bold;
+}
+.pl-negative {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+
+/* 그래프 컨테이너 */
 .chart-container {
-    width: 90%;
+    width: 100%;
     max-width: 800px;
-    margin: 20px auto; /* 가운데 정렬 */
+    margin: 20px auto;
     background-color: white;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* 구분선 */
 hr {
     border: 0;
     height: 1px;
     background: #ccc;
     margin: 25px 0;
+}
+
+/* =====================================================
+  모달 스타일 (변경 없음)
+  =====================================================
+*/
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 25px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.modal-content h2 {
+    text-align: left;
+    border-bottom: none;
+    margin-top: 0;
+}
+.modal-content input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.remember-me-container {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+}
+.remember-me-container label {
+    margin-left: 5px;
+    font-size: 14px;
+}
+.modal-buttons {
+    margin-top: 20px;
+    text-align: right;
+}
+.modal-buttons button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+#cancel-password {
+    background-color: #f0f0f0;
+}
+#submit-password {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+}
+
+/* =====================================================
+  편집 가능한 행 스타일 (변경 없음)
+  =====================================================
+*/
+.editable-row {
+    background-color: #fff9e0 !important;
+}
+
+td[contenteditable="true"] {
+    background-color: #ffffff;
+    cursor: text;
+}
+td[contenteditable="true"]:focus {
+    outline: 2px solid #3498db;
+}
+
+td.date-cell {
+    padding: 0;
+}
+
+td input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    box-sizing: border-box;
+    /* (수정) 날짜 입력창도 가운데 정렬 */
+    text-align: center;
+}
+td input[type="date"]:focus {
+    outline: 2px solid #3498db;
+    background-color: #ffffff;
+}
+
+tbody.is-modifying tr {
+    background-color: #fdfaf0; 
 }

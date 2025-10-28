@@ -9,35 +9,56 @@
 </head>
 <body>
 
-    <h1>나만의 코인 수익률 기록일지</h1>
-    <button id="record-button">기록하기</button>
+    <div class="container"> 
+        <h1>나만의 코인 수익률 기록일지</h1>
+        
+        <h2>요일별 누적자산 그래프</h2>
+        <div class="chart-container">
+            <canvas id="asset-chart"></canvas>
+        </div>
 
-    <hr>
+        <hr>
 
-    <h2>요일별 누적자산 그래프</h2>
-    <div class="chart-container">
-        <canvas id="asset-chart"></canvas>
+        <h2>수익 기록표</h2>
+
+        <div class="button-container"> 
+            <button id="record-button">기록하기</button>
+            <button id="modify-button">수정하기</button> 
+            <button id="save-new-button" class="save-btn-external">저장</button>
+            <button id="save-modify-button" class="save-btn-external">수정 저장</button>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>날짜</th>
+                    <th>손익 (달러)</th>
+                    <th>레버리지 (배)</th>
+                    <th>누적자산 (달러)</th>
+                    <th>비고</th>
+                </tr>
+            </thead>
+            <tbody id="data-table-body">
+            </tbody>
+        </table>
+    </div> 
+
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <h2>암호 입력</h2>
+            <p>기록을 위해 암호를 입력하세요.</p>
+            <input type="password" id="password-input" placeholder="암호">
+            <div class="remember-me-container">
+                <input type="checkbox" id="remember-me">
+                <label for="remember-me">이 기기에서는 다시 묻지 않기</label>
+            </div>
+            <div class="modal-buttons">
+                <button id="cancel-password">취소</button>
+                <button id="submit-password">확인</button>
+            </div>
+        </div>
     </div>
 
-    <hr>
-
-    <h2>수익 기록표</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>날짜</th>
-                <th>수익 (원)</th>
-                <th>레버리지 (배)</th>
-                <th>매입수수료 (원)</th>
-                <th>매도수수료 (원)</th>
-                <th>누적자산 (원)</th>
-                <th>비고</th>
-            </tr>
-        </thead>
-        <tbody id="data-table-body">
-            </tbody>
-    </table>
-
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
