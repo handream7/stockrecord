@@ -115,7 +115,6 @@ function updateRowPL(row) {
     const plCell = row.cells[1];        
     const assetCell = row.cells[3];     
     
-    // (수정) assetCell이 존재하는지 확인 (오류 방지)
     if (!assetCell) return;
 
     const currentAsset = parseFloat(
@@ -239,7 +238,7 @@ function checkPassword() {
 }
 
 /**
- * (수정) '기록하기' (신규 행 생성) - updateRowPL 순서 변경
+ * '기록하기' (신규 행 생성) - updateRowPL 순서 변경
  */
 function createEditableRow() {
     if (document.querySelector('.editable-row')) {
@@ -261,7 +260,6 @@ function createEditableRow() {
     // 2. 손익 셀 (index 1) - 표시 전용
     const profitCell = row.insertCell(1);
     profitCell.textContent = '0.00'; 
-    // updateRowPL(row); // <--- (오류 지점) 여기서 이동
 
     // 3. 레버리지 셀 (index 2)
     setupContentEditable(row.insertCell(2), null, '레버리지', null, true);
@@ -364,7 +362,6 @@ async function saveModifications() {
     } finally {
         isModifying = false;
         saveModifyButton.style.display = 'none';
-        // (수정) '수정 저장' 완료 후 테이블을 잠금 상태로 되돌림
         renderTable(currentRecords);
     }
 }
@@ -434,7 +431,6 @@ function renderTable(records) {
  * 누적자산 그래프를 그리는 함수
  */
 function renderChart(records) {
-    // (수정) getContext('d') 오타 수정
     const ctx = document.getElementById('asset-chart').getContext('2d');
 
     const labels = records.map(r => r.date); 
@@ -451,8 +447,10 @@ function renderChart(records) {
             datasets: [{
                 label: '누적자산 (달러)',
                 data: data, 
-                borderColor: '#3498db',
-                backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                // === (수정된 부분: 핑크 계열 색상) ===
+                borderColor: '#FF6F91', // 진한 핑크
+                backgroundColor: 'rgba(255, 111, 145, 0.2)', // 연한 핑크 (채우기)
+                // === (수정 끝) ===
                 borderWidth: 2,
                 fill: true,
                 tension: 0.1
